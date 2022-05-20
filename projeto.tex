@@ -212,9 +212,11 @@ This document presents guidelines on the use of UNISINOS's \LaTeX\ class for aca
 \epigrafecap{The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself. Therefore all progress depends on the unreasonable man.}{George Bernard Shaw}
 
 % {descreva  3 parágrafos entre 3 a 5 linhas cada} 
-Diariamente milhares de Kerneis Linux são compilados. Tal compilação requer maquinas cada vez mais capazes e eficientes. Empresas compilam Kerneis para distribuição em sistemas integrados, \citetexto{huong2022development}, uso servidores e uso pessoal, entre elas podemos citar Intel, Red Hat, Linaro e IBM, como demonstrado em \citetexto{linuxfoundation_2017}.
+Diariamente milhares de Kerneis Linux são compilados. Tal compilação requer maquinas cada vez mais capazes e eficientes. Melhorias dessas máquinas são regularmente criadas pelo advento de processadores cada vez mais rápidos e eficientes, porem existe também a constante busca de melhor utilização de tais processadores pela '\textit{stack}' de \textit{software}.
 
-Atualmente empresas que compilam Kerneis Linux possuem seus próprios ambientes virtualizado para compilação, tais ambientes se beneficiam de diversas formas de compilação, entre as já exploradas virtualização, para-virtualização, virtualização hibrida, contêineres e bare-metal.
+Empresas compilam Kerneis para distribuição em sistemas integrados, \citetexto{huong2022development}, uso servidores e uso pessoal, entre elas podemos citar Intel, Red Hat, Linaro e IBM, como demonstrado em \citetexto{linuxfoundation_2017}. Tais empresas possuem seus próprios ambientes para compilação(\textit{server farms}), tais ambientes se beneficiam de diversas formas de compilação, entre as já exploradas em artigos anteriores são: virtualização, para-virtualização, virtualização hibrida, \textit{containers} e \textit{bare-metal}, além do uso de compilação cruzada e nativa.
+
+A compilação cruzada faz o uso de compiladores que possuem a capacidade de produzir código para plataformas diferentes daquelas que compilou o código, plataformas como arm, x86, PowerPC. Tendo em vista tais ambientes, muitas empresas optam pela utilização de compiladores cruzados, com intuito de diminuir a complexidade suas infraestruturas. Porem como a compilação cruzada precisa "traduzir" as instruções de uma arquitetura para a outra isso poder trazer custos de desempenho ao utilizar tal método.
 
 Tendo em vista esse contexto, essa pesquisa tem com intuito analisar os custos ou benefícios de desempenho na compilação-cruzada e nativa do Kernel Linux para plataformas x86, Arm e s390.
 
@@ -228,7 +230,8 @@ desse trabalho: Quais as vantagens da compilação cruzada e sua relação de de
 
 \section{Objetivos}
 \subsection{Objetivo Geral}
-Analisar os custos ou benefícios de desempenho na compilação-cruzada  em relação a  plataformas x86, Arm e s390 no contexto da compilação do Kernel Linux.
+% Analisar as diferenças no desempenho entre compilção nativa e cruzada
+Analisar os custos ou benefícios em desempenho na compilação-cruzada  em relação a  plataformas x86, Arm e s390 no contexto da compilação do Kernel Linux.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
@@ -239,12 +242,12 @@ Analisar os custos ou benefícios de desempenho na compilação-cruzada  em rela
 
 \section{Justificativa}
 
-A pesquisa se diferencia dos artigos citados, pois foca apenas no aspecto das arquiteturas envolvidas sem considerar virtualizações de alto nível, como \citetexto{giallorenzo2021virtualization}. Enquanto \citetexto{nakajima2011optimizing} foca em otimizações da pilha de software, essa pesquisa foca na otimização de compilação conforme o hardware envolvido.
+Pesquisadores como \citetexto{giallorenzo2021virtualization} focam em coletar dados dos impactos da virtualização na compilação de software, outros como \citetexto{huong2022development} exploram outras categorias de virtualização como o HVM(hardware assisted virtual machine) e virtualização hibrida. Diante dos trabalhos apresentados já essa pesquisa visa analisar um nível mais baixo de abstração, focando no impacto das arquiteturas envolvidas na compilação de software.
 
 Para a pesquisa, as arquiteturas x86\_64, aarch64 e s390x foram escolhidas pela disponibilidade de hardware em provedores com AWS e IBM Cloud. Os testes serão feitos a partir de uma máquina x86 comparando seu desempenho, em Kernel/Hora, com suas contrapartes.
 
 A justificativa acadêmica dessa pesquisa se baseia na busca de uma
-contribuição para o avanço dos conhecimentos relacionados aos temas estudados. 
+contribuição para o avanço dos conhecimentos relacionados aos temas estudados
 
 \section{Estrutura do Trabalho}
 
